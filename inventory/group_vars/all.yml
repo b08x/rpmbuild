@@ -1,0 +1,8 @@
+---
+user:
+  name: "{{ lookup('env', 'USER') | default('b08x', true) }}"
+  group: "{{ lookup('env', 'USER') | default('b08x', true) }}"
+  home: "{{ lookup('env', 'HOME') | default('/home/' ~ (lookup('env', 'USER') | default('b08x', true)), true) }}"
+  shell: /usr/bin/zsh
+
+mock_cache_dir: /var/cache/mock

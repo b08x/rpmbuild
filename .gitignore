@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Ansible & Run Artifacts
+*.retry
+*.log
+.ansible/
+/tmp/
+
+# RPM Packaging & Mock Artifacts
+*.rpm
+*.srpm
+*.src.rpm
+/var/cache/mock/
+/var/lib/mock/
+output/
+result/
+results/
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tgz
+
+# OS / Editor
+.DS_Store
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "title": "Ansible Playbook Grapher",
+  "playbooks": [
+    {
+      "type": "PlaybookNode",
+      "id": "playbook_a09e4ceb",
+      "name": "playbooks/rpm_dev.yml",
+      "when": "",
+      "index": 1,
+      "location": {
+        "type": "file",
+        "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/playbooks/rpm_dev.yml",
+        "line": 1,
+        "column": 1
+      },
+      "plays": [
+        {
+          "type": "PlayNode",
+          "id": "play_3e23c738",
+          "name": "RPM Development Environment Setup",
+          "when": "",
+          "index": 1,
+          "location": {
+            "type": "file",
+            "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/playbooks/rpm_dev.yml",
+            "line": 2,
+            "column": 3
+          },
+          "pre_tasks": [],
+          "roles": [
+            {
+              "type": "RoleNode",
+              "id": "role_22708ea5",
+              "name": "b08x.rhel_builder.rpm_dev",
+              "when": "",
+              "index": 1,
+              "location": {
+                "type": "folder",
+                "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev",
+                "line": null,
+                "column": null
+              },
+              "tasks": [
+                {
+                  "type": "TaskNode",
+                  "id": "task_f5a89b40",
+                  "name": "b08x.rhel_builder.rpm_dev : Starting rpm-dev tasks",
+                  "when": "",
+                  "index": 1,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/main.yml",
+                    "line": 4,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_69b6c562",
+                  "name": "b08x.rhel_builder.rpm_dev : Load distribution-specific variables",
+                  "when": "",
+                  "index": 2,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/main.yml",
+                    "line": 9,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_8d920843",
+                  "name": "b08x.rhel_builder.rpm_dev : Install RPM development packages",
+                  "when": "[when: rpm_dev_install_packages | default(false) | bool and packages.rpm_dev is defined]",
+                  "index": 3,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/install.yml",
+                    "line": 2,
+                    "column": 3
+                  },
+                  "notify": [
+                    "Clear mock cache"
+                  ]
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_b4d82a47",
+                  "name": "b08x.rhel_builder.rpm_dev : Create mock group",
+                  "when": "[when: rpm_dev_setup_user | default(false) | bool]",
+                  "index": 4,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/user.yml",
+                    "line": 2,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_53647872",
+                  "name": "b08x.rhel_builder.rpm_dev : Add user to mock group",
+                  "when": "[when: rpm_dev_setup_user | default(false) | bool]",
+                  "index": 5,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/user.yml",
+                    "line": 8,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_1532e8f2",
+                  "name": "b08x.rhel_builder.rpm_dev : Create RPM build directories",
+                  "when": "[when: rpm_dev_setup_directories | default(false) | bool]",
+                  "index": 6,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/build_env.yml",
+                    "line": 2,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_c5cd1d9f",
+                  "name": "b08x.rhel_builder.rpm_dev : Deploy .rpmmacros template",
+                  "when": "[when: rpm_dev_setup_directories | default(false) | bool and rpm_build.setup_macros | default(false) | bool]",
+                  "index": 7,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/build_env.yml",
+                    "line": 13,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_d74a47ff",
+                  "name": "b08x.rhel_builder.rpm_dev : Ensure mock cache directory exists",
+                  "when": "[when: rpm_dev_setup_mock | default(false) | bool]",
+                  "index": 8,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/mock.yml",
+                    "line": 2,
+                    "column": 3
+                  },
+                  "notify": []
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_9ee4cc91",
+                  "name": "b08x.rhel_builder.rpm_dev : Deploy custom mock configurations",
+                  "when": "[when: rpm_dev_setup_mock | default(false) | bool]",
+                  "index": 9,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/mock.yml",
+                    "line": 11,
+                    "column": 3
+                  },
+                  "notify": [
+                    "Clear mock cache"
+                  ]
+                },
+                {
+                  "type": "TaskNode",
+                  "id": "task_b0ca6de8",
+                  "name": "b08x.rhel_builder.rpm_dev : Deploy custom mock templates",
+                  "when": "[when: rpm_dev_setup_mock | default(false) | bool]",
+                  "index": 10,
+                  "location": {
+                    "type": "file",
+                    "path": "/home/b08x/WorkspaceV3/Syncopated/ansible/collections/ansible_collections/b08x/rhel_builder/roles/rpm_dev/tasks/mock.yml",
+                    "line": 23,
+                    "column": 3
+                  },
+                  "notify": [
+                    "Clear mock cache"
+                  ]
+                }
+              ],
+              "handlers": [],
+              "include_role": false
+            }
+          ],
+          "tasks": [],
+          "post_tasks": [],
+          "handlers": [],
+          "hosts": [
+            "tinybot",
+            "gir"
+          ],
+          "colors": {
+            "main": "#c30947",
+            "font": "#ffffff"
+          }
+        }
+      ]
+    }
+  ]
+}
