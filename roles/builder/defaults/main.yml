@@ -1,0 +1,16 @@
+---
+# Builder role defaults
+
+builder_user: "{{ setup_server_user.name | default(ansible_user_id) }}"
+
+builder_create_directories: true
+builder_setup_macros: true
+builder_home_dir: "{{ ansible_env.HOME }}"
+builder_build_dir: "{{ builder_home_dir }}/rpmbuild"
+
+builder_directories:
+  - BUILD
+  - RPMS
+  - SOURCES
+  - SPECS
+  - SRPMS

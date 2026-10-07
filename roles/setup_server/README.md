@@ -22,15 +22,15 @@ This Ansible role sets up a complete RPM development environment for Fedora, Alm
 
 ```yaml
 # User configuration
-rpm_dev_user:
+setup_server_user:
   name: "{{ ansible_user_id }}"
   groups: ["mock"]
 
 # Package installation control
-rpm_dev_install_packages: true
-rpm_dev_setup_user: true
-rpm_dev_setup_mock: true
-rpm_dev_setup_directories: true
+setup_server_install_packages: true
+setup_server_setup_user: true
+setup_server_setup_mock: true
+setup_server_setup_directories: true
 
 # Mock configuration
 mock_config:
@@ -91,7 +91,7 @@ The role installs comprehensive RPM development tools:
 - hosts: workstation
   become: yes
   roles:
-    - rpm-dev
+    - setup-server
 ```
 
 ### AlmaLinux Build Server
@@ -100,14 +100,14 @@ The role installs comprehensive RPM development tools:
 - hosts: almalinux_builders
   become: yes
   vars:
-    rpm_dev_user:
+    setup_server_user:
       name: "packager"
       groups: ["mock", "wheel"]
     mock_config:
       enable_network: true
       cleanup_on_failure: false
   roles:
-    - rpm-dev
+    - setup-server
 ```
 
 ### Custom Configuration
@@ -116,14 +116,14 @@ The role installs comprehensive RPM development tools:
 - hosts: workstation
   become: yes
   vars:
-    rpm_dev_user:
+    setup_server_user:
       name: "packager"
       groups: ["mock", "wheel"]
     mock_config:
       enable_network: true
       cleanup_on_failure: false
   roles:
-    - rpm-dev
+    - setup-server
 ```
 
 ### Tag-based Execution
@@ -191,7 +191,7 @@ This role integrates seamlessly with the existing multi-distribution architectur
   become: yes
   roles:
     - base
-    - rpm-dev
+    - setup-server
     - tools
 
 # AlmaLinux build server
@@ -199,14 +199,14 @@ This role integrates seamlessly with the existing multi-distribution architectur
   become: yes
   roles:
     - base
-    - rpm-dev
+    - setup-server
     - tools
 
 # Mixed fleet
 - hosts: all_builders
   become: yes
   roles:
-    - rpm-dev
+    - setup-server
 ```
 
 ## Troubleshooting
@@ -245,7 +245,7 @@ ls /var/lib/mock/*/result/
 This role can optionally depend on the `base` role for fundamental development tools:
 
 ```yaml
-rpm_dev_install_base_deps: true
+setup_server_install_base_deps: true
 ```
 
 ## Testing

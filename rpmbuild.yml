@@ -4,7 +4,7 @@
   become: true
   gather_facts: true
   vars:
-    rpm_dev_user:
+    setup_server_user:
       name: "{{ user.name | default(ansible_user_id) }}"
       groups: ["mock"]
       create_home: true
@@ -20,22 +20,24 @@
       cleanup_on_success: true
       cleanup_on_failure: false
 
-    rpm_build:
-      create_directories: true
-      setup_macros: true
-      home_dir: "{{ user.home | default(ansible_env.HOME) }}"
-      build_dir: "{{ user.home | default(ansible_env.HOME) }}/rpmbuild"
-      directories:
-        - BUILD
-        - RPMS
-        - SOURCES
-        - SPECS
-        - SRPMS
+    builder_user: "{{ user.name | default(ansible_user_id) }}"
+    builder_create_directories: true
+    builder_setup_macros: true
+    builder_home_dir: "{{ user.home | default('/home/' + (builder_user | default(ansible_user_id))) }}"
+    builder_build_dir: "{{ builder_home_dir }}/rpmbuild"
+    builder_directories:
+      - BUILD
+      - RPMS
+      - SOURCES
+      - SPECS
+      - SRPMS
 
-    rpm_dev_install_packages: true
-    rpm_dev_setup_user: true
-    rpm_dev_setup_mock: true
-    rpm_dev_setup_directories: true
+    setup_server_install_packages: true
+    setup_server_setup_user: true
+    setup_server_setup_mock: true
+
   roles:
-    - role: rpm_dev
-      tags: ["rpm_dev", "builder"]
+    - role: setup_server
+      tags: ["setup_server", "builder"]
+    - role: builder
+      tags: ["builder"]

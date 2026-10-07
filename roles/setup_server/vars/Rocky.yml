@@ -1,5 +1,5 @@
 ---
-packages__rpm_dev:
+packages__setup_server:
   - createrepo_c
   - curl
   - diffutils
@@ -32,7 +32,7 @@ packages__dev_tools:
   - less
 
 packages:
-  rpm_dev: "{{ packages__rpm_dev + packages__mock_deps + packages__dev_tools }}"
+  setup_server: "{{ packages__setup_server + packages__mock_deps + packages__dev_tools }}"
 
 mock_configs:
   - src: "rocky-10-x86_64.cfg.j2"

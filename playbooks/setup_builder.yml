@@ -1,0 +1,43 @@
+---
+- name: RPM Development Environment Setup
+  hosts: builder
+  become: true
+  gather_facts: true
+  vars:
+    setup_server_user:
+      name: "{{ user.name | default(ansible_user_id) }}"
+      groups: ["mock"]
+      create_home: true
+
+    mock_config:
+      enable_network: true
+      enable_bootstrap: true
+      use_host_resolv: false
+      cache_topdir: /var/cache/mock
+      root_cache_enable: true
+      yum_cache_enable: true
+      dnf_cache_enable: true
+      cleanup_on_success: true
+      cleanup_on_failure: false
+
+    builder_user: "{{ user.name | default(ansible_user_id) }}"
+    builder_create_directories: true
+    builder_setup_macros: true
+    builder_home_dir: "{{ user.home | default('/home/' + (builder_user | default(ansible_user_id))) }}"
+    builder_build_dir: "{{ builder_home_dir }}/rpmbuild"
+    builder_directories:
+      - BUILD
+      - RPMS
+      - SOURCES
+      - SPECS
+      - SRPMS
+
+    setup_server_install_packages: true
+    setup_server_setup_user: true
+    setup_server_setup_mock: true
+
+  roles:
+    - role: setup_server
+      tags: ["setup_server", "builder"]
+    - role: builder
+      tags: ["builder"]

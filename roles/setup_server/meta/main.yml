@@ -12,17 +12,10 @@ galaxy_info:
   platforms:
     - name: Fedora
       versions:
-        - "43"
-    - name: AlmaLinux
-      versions:
-        - "8"
-        - "9"
-        - "10"
+        - "all"
     - name: EL
       versions:
-        - "8"
-        - "9"
-        - "10"
+        - "all"
 
   galaxy_tags:
     - rpm

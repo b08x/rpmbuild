@@ -1,5 +1,5 @@
 ---
-packages__rpm_dev:
+packages__setup_server:
   - "@development-tools"
   - createrepo_c
   - curl
@@ -34,7 +34,7 @@ packages__dev_tools:
   - less
 
 packages:
-  rpm_dev: "{{ packages__rpm_dev + packages__mock_deps + packages__dev_tools }}"
+  setup_server: "{{ packages__setup_server + packages__mock_deps + packages__dev_tools }}"
 
 mock_configs:
   - src: "custom-fedora-{{ ansible_distribution_major_version }}.cfg.j2"

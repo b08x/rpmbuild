@@ -1,0 +1,30 @@
+---
+# RPM Development Environment setup tasks
+
+- name: Starting setup-server tasks
+  ansible.builtin.debug:
+    msg: "Starting setup-server tasks"
+  tags: ["setup-server", "always"]
+
+- name: "Load distribution-specific variables"
+  ansible.builtin.include_vars: "{{ ansible_distribution }}.yml"
+  tags: ["setup-server", "packages"]
+
+- name: Import installation tasks
+  ansible.builtin.import_tasks:
+    file: install.yml
+  when: setup_server_install_packages | default(false) | bool
+  tags: ["setup-server", "packages"]
+
+- name: Import user setup tasks
+  ansible.builtin.import_tasks:
+    file: user.yml
+  when: setup_server_setup_user | default(false) | bool
+  tags: ["setup-server", "user-setup"]
+
+
+- name: Import mock setup tasks
+  ansible.builtin.import_tasks:
+    file: mock.yml
+  when: setup_server_setup_mock | default(false) | bool
+  tags: ["setup-server", "mock-setup", "mock-config"]

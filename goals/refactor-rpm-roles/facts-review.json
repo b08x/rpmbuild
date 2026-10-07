@@ -1,0 +1,71 @@
+{
+  "stage": "facts",
+  "title": "Refactor RPM roles to setup_server and builder",
+  "goalSlug": "refactor-rpm-roles",
+  "facts": [
+    {
+      "id": "rename-role",
+      "text": "The existing `rpm_dev` role is renamed to `setup_server`.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "setup-server-scope",
+      "text": "The `setup_server` role is exclusively responsible for installing system packages, setting up the user account, and configuring `mock` for local builds.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "create-builder-role",
+      "text": "A new Ansible role named `builder` is created.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "builder-files-dir",
+      "text": "The `builder` role contains a `files/` subdirectory to track `.spec` files and source files in version control.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "builder-directory-setup",
+      "text": "The `builder` role ensures the `~/rpmbuild/` directory tree (including `SPECS`, `SOURCES`, etc.) exists on the target server for the user.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "builder-copy-files",
+      "text": "The `builder` role copies the tracked `.spec` files and sources from its `files/` directory into the target user's corresponding `~/rpmbuild/SPECS` and `~/rpmbuild/SOURCES` directories.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "update-variables",
+      "text": "Existing variables prefixed with `rpm_dev_` are renamed to use `setup_server_` or `builder_` prefixes as appropriate across the codebase.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    },
+    {
+      "id": "update-playbooks",
+      "text": "Playbooks that previously used the `rpm_dev` role (e.g., `rpmbuild.yml`) are updated to call both `setup_server` and `builder` roles sequentially.",
+      "accepted": false,
+      "removed": false,
+      "recommendedAutomatedVerification": true,
+      "automatedVerification": true
+    }
+  ]
+}
