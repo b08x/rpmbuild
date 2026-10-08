@@ -1,0 +1,15 @@
+--- a/Daemon/ydotool.service.in
++++ b/Daemon/ydotool.service.in
+@@ -1,8 +1,10 @@
+ [Unit]
+-Description=Starts ydotoold service
++Description=Starts ydotoold Daemon
+ 
+ [Service]
+ Type=simple
+-Restart=always
++Restart=on-failure
++RestartSec=3
++ExecStartPre=/bin/sleep 2
+ ExecStart=@CMAKE_INSTALL_FULL_BINDIR@/ydotoold
+ ExecReload=/usr/bin/kill -HUP $MAINPID
