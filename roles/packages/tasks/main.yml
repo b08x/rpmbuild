@@ -1,0 +1,16 @@
+---
+- name: Starting packages tasks
+  ansible.builtin.debug:
+    msg: "Starting packages tasks"
+  tags: ["packages", "always"]
+
+- name: Import build environment tasks
+  ansible.builtin.import_tasks:
+    file: build_env.yml
+  when: packages_create_directories | default(true) | bool
+  tags: ["packages", "directories", "configuration"]
+
+- name: Import file sync tasks
+  ansible.builtin.import_tasks:
+    file: sync_files.yml
+  tags: ["packages", "sync"]

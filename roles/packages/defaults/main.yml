@@ -1,0 +1,11 @@
+---
+# Packages role defaults
+
+packages_user: "{{ setup_server_user.name | default(builder_user | default(ansible_user_id)) }}"
+
+packages_create_directories: "{{ builder_create_directories | default(true) }}"
+packages_setup_macros: "{{ builder_setup_macros | default(true) }}"
+packages_home_dir: "{{ builder_home_dir | default(ansible_env.HOME) }}"
+packages_build_dir: "{{ builder_build_dir | default(packages_home_dir ~ '/rpmbuild') }}"
+
+packages_directories: "{{ builder_directories | default(['BUILD', 'RPMS', 'SOURCES', 'SPECS', 'SRPMS']) }}"

@@ -1,0 +1,66 @@
+---
+- name: Check if files directory exists
+  delegate_to: localhost
+  ansible.builtin.stat:
+    path: "{{ role_path }}/files"
+  register: files_dir_stat
+  become: false
+
+- name: Ensure target RPM build directories exist for sync
+  ansible.builtin.file:
+    path: "{{ packages_build_dir }}/{{ item }}"
+    state: directory
+    owner: "{{ packages_user }}"
+    group: "{{ packages_user }}"
+    mode: "0755"
+  loop:
+    - SPECS
+    - SOURCES
+  become: false
+  when:
+    - files_dir_stat.stat.exists
+    - files_dir_stat.stat.isdir
+
+- name: Find all files in packages files directory
+  delegate_to: localhost
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files"
+    recurse: true
+    file_type: file
+  register: packages_files
+  when: files_dir_stat.stat.exists and files_dir_stat.stat.isdir
+  become: false
+
+- name: Sync .spec files
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ packages_build_dir }}/SPECS/{{ item.path | basename }}"
+    owner: "{{ packages_user }}"
+    group: "{{ packages_user }}"
+    mode: "0644"
+  loop: "{{ packages_files.files | default([]) }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+  when:
+    - packages_files is defined
+    - packages_files.files is defined
+    - item.path is search('\.spec$')
+    - not (item.path is search('/sources/'))
+  become: false
+
+- name: Sync source files
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ packages_build_dir }}/SOURCES/{{ item.path | basename }}"
+    owner: "{{ packages_user }}"
+    group: "{{ packages_user }}"
+    mode: "0644"
+  loop: "{{ packages_files.files | default([]) }}"
+  loop_control:
+    label: "{{ item.path | basename }}"
+  when:
+    - packages_files is defined
+    - packages_files.files is defined
+    - item.path is search('/sources/')
+    - not (item.path is search('\.gitkeep$'))
+  become: false

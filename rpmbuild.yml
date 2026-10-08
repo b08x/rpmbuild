@@ -20,12 +20,12 @@
       cleanup_on_success: true
       cleanup_on_failure: false
 
-    builder_user: "{{ user.name | default(ansible_user_id) }}"
-    builder_create_directories: true
-    builder_setup_macros: true
-    builder_home_dir: "{{ user.home | default('/home/' + (builder_user | default(ansible_user_id))) }}"
-    builder_build_dir: "{{ builder_home_dir }}/rpmbuild"
-    builder_directories:
+    packages_user: "{{ user.name | default(ansible_user_id) }}"
+    packages_create_directories: true
+    packages_setup_macros: true
+    packages_home_dir: "{{ user.home | default('/home/' + (packages_user | default(ansible_user_id))) }}"
+    packages_build_dir: "{{ packages_home_dir }}/rpmbuild"
+    packages_directories:
       - BUILD
       - RPMS
       - SOURCES
@@ -38,6 +38,6 @@
 
   roles:
     - role: setup_server
-      tags: ["setup_server", "builder"]
-    - role: builder
-      tags: ["builder"]
+      tags: ["setup_server"]
+    - role: packages
+      tags: ["packages"]

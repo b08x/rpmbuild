@@ -1,7 +1,7 @@
-# RPM macros configuration for {{ builder_user | default(ansible_user_id) }}
+# RPM macros configuration for {{ packages_user | default(builder_user | default(ansible_user_id)) }}
 
 # Build directories
-%_topdir {{ builder_build_dir | default((builder_home_dir | default(ansible_env.HOME)) ~ '/rpmbuild') }}
+%_topdir {{ packages_build_dir | default(builder_build_dir | default((packages_home_dir | default(builder_home_dir | default(ansible_env.HOME))) ~ '/rpmbuild')) }}
 %_sourcedir %{_topdir}/SOURCES
 %_specdir %{_topdir}/SPECS
 %_builddir %{_topdir}/BUILD
@@ -9,7 +9,7 @@
 %_rpmdir %{_topdir}/RPMS
 
 # Packager information
-%packager {{ builder_user | default(ansible_user_id) }} <{{ builder_user | default(ansible_user_id) }}@{{ ansible_fqdn | default('localhost') }}>
+%packager {{ packages_user | default(builder_user | default(ansible_user_id)) }} <{{ packages_user | default(builder_user | default(ansible_user_id)) }}@{{ ansible_fqdn | default('localhost') }}>
 
 # Distribution specific macros
 {% if ansible_distribution == 'Fedora' %}
@@ -29,5 +29,5 @@
 # GPG signature settings (uncomment and configure as needed)
 # %_signature gpg
 # %_gpg_path ~/.gnupg
-# %_gpg_name {{ builder_user | default(ansible_user_id) }}
+# %_gpg_name {{ packages_user | default(builder_user | default(ansible_user_id)) }}
 # %_gpgbin /usr/bin/gpg2

@@ -14,16 +14,14 @@ Dedicated standalone repository for provisioning RPM development workstations, c
 │   └── group_vars/
 │       └── all.yml               # User identity SSOT and mock cache configurations
 ├── playbooks/
-│   └── rpm_dev.yml               # RPM development & mock environment setup playbook
+│   └── setup_builder.yml         # Builder provisioning playbook calling setup_server and packages
 ├── roles/
-│   └── rpm_dev/                  # Standalone RPM development and mock role
-│       ├── defaults/main.yml     # Role defaults with robust user & home fallbacks
-│       ├── handlers/main.yml     # Handlers (e.g., mock cache scrubbing)
-│       ├── meta/main.yml         # Role metadata and platform support
-│       ├── tasks/                # Modular tasks (install, user, build_env, mock)
-│       ├── templates/            # Custom mock configs and user .rpmmacros
-│       ├── files/                # Distribution mock templates (.tpl)
-│       └── vars/                 # Distribution-specific package definitions
+│   ├── setup_server/             # System-level prerequisites (packages, user, mock)
+│   └── packages/                 # User rpmbuild tree, macros, and spec/source sync
+│       ├── defaults/main.yml     # User & build path configurations
+│       ├── tasks/                # Build env & file sync tasks
+│       ├── templates/            # User .rpmmacros template
+│       └── files/                # Managed package specs and sources (<pkg>/*.spec, <pkg>/sources/*)
 ├── scripts/
 │   ├── mock-build.sh             # Workflow automation script for isolated builds
 │   └── clean-cache.sh            # Mock cache & chroot cleanup utility
