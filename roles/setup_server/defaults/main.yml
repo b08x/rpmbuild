@@ -19,7 +19,6 @@ mock_config:
   cleanup_on_success: true
   cleanup_on_failure: false
 
-
 # Mock build targets — distribution-specific defaults loaded from vars/<dist>.yml
 # Override per-host or per-group as needed.
 mock_targets: "{{ _mock_targets | default([]) }}"

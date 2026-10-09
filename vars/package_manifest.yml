@@ -1,0 +1,49 @@
+packages:
+  - name: python-evdev
+    needs_update: true
+    spec_path: roles/packages/files/python-evdev/python-evdev.spec
+    version: 2.0.0
+  - name: input-remapper
+    needs_update: false
+    spec_path: roles/packages/files/input-remapper/input-remapper.spec
+    version: 2.2.1
+  - name: python-transcribe-cpp
+    needs_update: false
+    spec_path: roles/packages/files/python-transcribe-cpp/python-transcribe-cpp.spec
+    version: 0.3.1
+  - name: python-JACK-Client
+    needs_update: false
+    spec_path: roles/packages/files/python-JACK-Client/python-JACK-Client.spec
+    version: 0.5.7
+  - name: omega13
+    needs_update: false
+    spec_path: roles/packages/files/omega13/omega13.spec
+    version: 2.7.5
+  - name: cpulimit
+    needs_update: false
+    spec_path: roles/packages/files/cpulimit/cpulimit.spec
+    version: "0.2"
+  - name: python-dbus-next
+    needs_update: false
+    spec_path: roles/packages/files/python-dbus-next/python-dbus-next.spec
+    version: 0.2.3
+  - name: gtk4-layer-shell
+    needs_update: true
+    spec_path: roles/packages/files/gtk4-layer-shell/gtk4-layer-shell.spec
+    version: 1.3.0
+  - name: ydotool
+    needs_update: false
+    spec_path: roles/packages/files/ydotool/ydotool.spec
+    version: 1.0.4
+  - name: yaru-theme
+    needs_update: false
+    spec_path: roles/packages/files/yaru-theme/yaru-theme.spec
+    version: 25.10.3
+  - name: python-scikit-build-core
+    needs_update: true
+    spec_path: roles/packages/files/python-scikit-build-core/python-scikit-build-core.spec
+    version: 1.1.1
+  - name: gtk-layer-shell
+    needs_update: true
+    spec_path: roles/packages/files/gtk-layer-shell/gtk-layer-shell.spec
+    version: 0.10.1

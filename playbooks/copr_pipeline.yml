@@ -1,0 +1,28 @@
+---
+- name: Automate COPR package sync and build pipeline
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Ensure vars directory exists
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/../vars"
+        state: directory
+        mode: "0755"
+
+    - name: Run copr_sync.py to check versions and update spec files
+      ansible.builtin.command: python3 "{{ playbook_dir }}/../scripts/copr_sync.py"
+      register: copr_sync_result
+      changed_when: "'New version available' in copr_sync_result.stdout"
+
+    - name: Load package manifest
+      ansible.builtin.include_vars:
+        file: "{{ playbook_dir }}/../vars/package_manifest.yml"
+
+    - name: Build and trigger COPR for updated packages
+      ansible.builtin.include_tasks:
+        file: "{{ playbook_dir }}/tasks/build_package.yml"
+      loop: "{{ packages }}"
+      loop_control:
+        loop_var: pkg
+      when: pkg.needs_update | bool
