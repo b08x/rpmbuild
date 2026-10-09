@@ -22,7 +22,6 @@
   when: setup_server_setup_user | default(false) | bool
   tags: ["setup-server", "user-setup"]
 
-
 - name: Import mock setup tasks
   ansible.builtin.import_tasks:
     file: mock.yml

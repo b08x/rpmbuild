@@ -1,0 +1,32 @@
+---
+- name: Download new sources with spectool for {{ pkg.name }}
+  ansible.builtin.command: "spectool -g -R {{ playbook_dir }}/../{{ pkg.spec_path }}"
+  args:
+    chdir: "{{ playbook_dir }}/../{{ pkg.spec_path | dirname }}"
+  changed_when: true
+
+- name: Sync updated spec and sources to builder via roles/packages (setup environment)
+  ansible.builtin.include_role:
+    name: packages
+
+- name: Build SRPM and RPM locally using mock-build.sh for {{ pkg.name }}
+  ansible.builtin.command: "{{ playbook_dir }}/../scripts/mock-build.sh {{ playbook_dir }}/../{{ pkg.spec_path }}"
+  register: mock_build_result
+  changed_when: true
+
+- name: Display mock build output
+  ansible.builtin.debug:
+    var: mock_build_result.stdout_lines
+
+- name: Find generated SRPM path
+  ansible.builtin.find:
+    paths: "~/rpmbuild/SRPMS/"
+    patterns: "{{ pkg.name }}-*.src.rpm"
+    file_type: file
+    use_regex: false
+  register: srpm_find_result
+
+- name: Trigger COPR build for {{ pkg.name }}
+  ansible.builtin.command: "copr-cli build b08x/syncopated {{ srpm_find_result.files[0].path }}"
+  when: srpm_find_result.matched > 0
+  changed_when: true
